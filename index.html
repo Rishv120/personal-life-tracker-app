@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="theme-color" content="#101512">
+  <meta name="description" content="A private, local-first personal life tracker.">
+  <title>Personal Life OS</title>
+  <link rel="manifest" href="manifest.json">
+  <link rel="icon" href="assets/icons/icon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <header>
+    <div class="brand"><div class="logo">L</div><span>PERSONAL LIFE OS</span></div>
+    <div class="header-actions">
+      <button class="iconbtn" id="exportBtn" title="Export backup">↥</button>
+      <button class="iconbtn" id="importBtn" title="Import backup">↧</button>
+      <input id="importFile" type="file" accept="application/json" hidden>
+    </div>
+  </header>
+  <main>
+    <section id="home" class="page active">
+      <div class="kicker" id="todayLabel">YOUR DAILY OVERVIEW</div>
+      <h1>Make today<br>count.</h1>
+      <p class="sub">A clear view of what matters. One day at a time.</p>
+      <div class="stats">
+        <div class="stat"><small>TASKS DONE</small><strong id="taskStat">0/0</strong></div>
+        <div class="stat"><small>HABITS DONE</small><strong id="habitStat">0/5</strong></div>
+        <div class="stat"><small>DAY SCORE</small><strong id="scoreStat">0%</strong></div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><h2>Today's progress</h2><span class="tiny" id="progressLabel">0% complete</span></div>
+        <div class="progress"><span id="progressBar"></span></div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><h2>Priority tasks</h2><button class="btn ghost" data-go="tasks">View all →</button></div>
+        <div id="homeTasks"></div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><h2>Daily habits</h2><button class="btn ghost" data-go="habits">Manage →</button></div>
+        <div id="homeHabits"></div>
+      </div>
+      <div class="card">
+        <div class="cardhead"><h2>Quick reflection</h2><span class="pill">JOURNAL</span></div>
+        <textarea id="quickJournal" class="field" placeholder="One thing on your mind today..."></textarea>
+        <div class="tiny note">Saved automatically on this device.</div>
+      </div>
+    </section>
+
+    <section id="tasks" class="page">
+      <div class="kicker">GET THINGS DONE</div><h1 class="sectiontitle">Tasks</h1><p class="sub">Keep the list short. Move the important things forward.</p>
+      <div class="datebar"><button id="taskPrev">← Previous</button><strong id="taskDate"></strong><button id="taskNext">Next →</button></div>
+      <div class="card">
+        <div class="cardhead"><h2>Add a task</h2></div>
+        <div class="addrow"><input id="taskInput" class="field" placeholder="What needs to get done?" maxlength="100"><button class="btn" id="addTaskBtn">Add</button></div>
+        <div class="addrow">
+          <select id="taskCategory" class="field"><option>Career Skills</option><option>Growth Mindset</option><option>Routine</option><option>Gym</option><option>Academics</option><option>Personal</option></select>
+          <select id="taskPriority" class="field"><option>High</option><option selected>Medium</option><option>Low</option></select>
+        </div>
+      </div>
+      <div class="card"><div class="cardhead"><h2>Open tasks</h2><span class="pill" id="openCount">0</span></div><div id="openTasks"></div></div>
+      <div class="card"><div class="cardhead"><h2>Completed</h2><span class="pill" id="doneCount">0</span></div><div id="doneTasks"></div></div>
+    </section>
+
+    <section id="habits" class="page">
+      <div class="kicker">BUILD CONSISTENCY</div><h1 class="sectiontitle">Habits</h1><p class="sub">Small actions, repeated. Track completion without chasing perfection.</p>
+      <div class="datebar"><button id="habitPrev">← Previous</button><strong id="habitDate"></strong><button id="habitNext">Next →</button></div>
+      <div class="card"><div class="cardhead"><h2>Daily checklist</h2><span class="pill" id="habitCount">0/0</span></div><div id="habitList"></div></div>
+      <div class="card"><div class="cardhead"><h2>Your habits</h2><span class="tiny">Add or remove habits</span></div>
+        <div class="addrow"><input id="habitInput" class="field" placeholder="New habit..." maxlength="50"><button class="btn" id="addHabitBtn">Add</button></div>
+        <div id="manageHabits" class="manage-list"></div>
+      </div>
+    </section>
+
+    <section id="journal" class="page">
+      <div class="kicker">PAUSE AND REFLECT</div><h1 class="sectiontitle">Journal</h1><p class="sub">A private space for a quick daily check-in.</p>
+      <div class="datebar"><button id="journalPrev">← Previous</button><strong id="journalDate"></strong><button id="journalNext">Next →</button></div>
+      <div class="card"><div class="cardhead"><h2>How are you feeling?</h2></div>
+        <select id="mood" class="field"><option value="">Choose a mood</option><option>Focused</option><option>Good</option><option>Neutral</option><option>Stressed</option><option>Low energy</option><option>Overwhelmed</option></select>
+      </div>
+      <div class="card">
+        <div class="cardhead"><h2>Daily reflection</h2><span class="tiny">Autosaves</span></div>
+        <label class="tiny" for="journalWin">What went well today?</label><textarea id="journalWin" class="field journal-field" placeholder="A small win counts..."></textarea>
+        <label class="tiny" for="journalImprove">What could be better?</label><textarea id="journalImprove" class="field journal-field" placeholder="What did you learn?"></textarea>
+        <label class="tiny" for="journalNote">Anything else on your mind?</label><textarea id="journalNote" class="field journal-field" placeholder="Write freely..."></textarea>
+      </div>
+    </section>
+  </main>
+  <div class="footer">PERSONAL LIFE OS · V1 · YOUR DATA STAYS ON THIS DEVICE</div>
+</div>
+<nav class="nav"><div class="navinner">
+  <button class="active" data-page="home"><b>⌂</b>Home</button>
+  <button data-page="tasks"><b>☷</b>Tasks</button>
+  <button data-page="habits"><b>◉</b>Habits</button>
+  <button data-page="journal"><b>▤</b>Journal</button>
+</div></nav>
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
+<script type="module" src="js/app.js"></script>
+</body>
+</html>

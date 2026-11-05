@@ -1,0 +1,17 @@
+{
+  "name": "Personal Life OS",
+  "short_name": "Life OS",
+  "description": "A private, local-first personal life tracker.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#0d120f",
+  "theme_color": "#101512",
+  "icons": [
+    {
+      "src": "assets/icons/icon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    }
+  ]
+}
